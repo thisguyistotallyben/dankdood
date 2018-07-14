@@ -17,7 +17,7 @@ class DankDood(discord.Client):
             lines = f.readlines()
             if len(lines) != 1:
                 raise IOError
-            self.giphy = giphy.Giphy(lines[0])
+            self.giphy = giphy.Giphy(lines[0].strip())
 
         # dankness ranking
         self.dankrank = dankrank.DankRank()
@@ -31,10 +31,6 @@ class DankDood(discord.Client):
         print('-------------------------------')
 
     async def on_message(self, message):
-        # string stuff
-        isstring = True
-        s = ''
-
         # for shortness
         chan = message.channel
 
@@ -54,7 +50,7 @@ class DankDood(discord.Client):
             # no param commands
             if len(msplit) == 1:
                 if command == 'hello':
-                    await chan.send(f'yo {message.author}, what\'s danking my dood?')
+                    await chan.send(f'yo {message.author.display_name}, what\'s danking my dood?')
                 elif command == 'dank':
                     await chan.send(':100: :ok_hand: :joy:')
                 elif command == 'dankdank':
@@ -66,8 +62,7 @@ class DankDood(discord.Client):
                     await chan.send('not dank')
                     # await chan.send(self.dankrank.rank_bad())
                 if command == 'random':
-                    await chan.send('random gif search here')
-                    # await chan.send(self.giphy.search_random())
+                    await chan.send(self.giphy.search_random())
 
 
 # start this bad boi

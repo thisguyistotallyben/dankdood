@@ -5,10 +5,84 @@
 import discord
 from random import randint
 import urllib
-import urllib.request
 import json
 
+from utils import giphy
+from utils import dankrank
 
+class DankDood(discord.Client):
+    def __init__(self):
+        # set up giphy search
+        with open('keys/giphy.txt', 'r') as f:
+            lines = f.readlines()
+            if len(lines) != 1:
+                raise IOError
+            self.giphy = giphy.Giphy(lines[0])
+
+        # dankness ranking
+        self.dankrank = dankrank.DankRank()
+
+        # init client thing
+        super().__init__()
+
+    async def on_ready(self):
+        await self.change_presence(activity=discord.Game(name="vine compilations"))
+        print('logged in, fo shizzle')
+        print('-------------------------------')
+
+    async def on_message(self, message):
+        # string stuff
+        isstring = True
+        s = ''
+
+        # for shortness
+        chan = message.channel
+
+        # do-not-reply
+        if message.author == self.user:
+            return
+
+        # make case insensitive
+        message.content = message.content.lower()
+
+        # standard !* commands
+        if message.content.startswith('!'):
+            # split and get relevant stuff
+            msplit = message.content[1:].split(' ', 1)
+            command = msplit[0]
+
+            # no param commands
+            if len(msplit) == 1:
+                if command == 'hello':
+                    await chan.send(f'yo {message.author}, what\'s danking my dood?')
+                elif command == 'dank':
+                    await chan.send(':100: :ok_hand: :joy:')
+                elif command == 'dankdank':
+                    await chan.send('3 DANK 5 ME')
+                elif command == 'howdank':
+                    await chan.send('how dank')
+                    # await chan.send(self.dankrank.rank())
+                elif command == 'notdank':
+                    await chan.send('not dank')
+                    # await chan.send(self.dankrank.rank_bad())
+                if command == 'random':
+                    await chan.send('random gif search here')
+                    # await chan.send(self.giphy.search_random())
+
+
+# start this bad boi
+with open('keys/discord.txt', 'r') as f:
+    lines = f.readlines()
+    if len(lines) == 1:
+        client = DankDood()
+        client.run(lines[0].strip())
+
+
+
+
+
+
+'''
 # setup
 client = discord.client.Client()
 
@@ -60,7 +134,7 @@ def get_search_gif(mess):
 
     # error checking
     if len(mess) == 0: return "You need a search query my doods"
-    
+
     # replace spaces with +
     new_mess = mess.replace(" ", "+")
 
@@ -108,3 +182,4 @@ def not_dank():
         return "Listen.  We need to have a talk.  I hear something wasn't dank.  I don't take kindly to such actions.\n\nhttp://www.reactiongifs.com/r/2013/05/about-to-go-down.gif"
 
 client.run("[discord api key]")
+'''

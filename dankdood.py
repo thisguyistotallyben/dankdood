@@ -49,6 +49,9 @@ class DankDood(discord.Client):
 
             # no param commands
             if len(msplit) == 1:
+                if command == 'shrug':
+                    await message.delete()
+                    await chan.send('¯\_(ツ)_/¯')
                 if command == 'hello':
                     await chan.send(f'yo {message.author.display_name}, what\'s danking my dood?')
                 elif command == 'dank':

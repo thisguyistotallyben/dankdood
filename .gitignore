@@ -1,3 +1,4 @@
 *.swp
 /keys
+config.json
 __pycache__

@@ -4,8 +4,8 @@
 
 import discord
 
-from commands import lookup, dank
 from bot import config, bot
+from commands import lookup, dank, misc
 
 
 # startup stuff
@@ -31,6 +31,17 @@ async def on_message(message):
     # process everything else
     else:
         await bot.process_commands(message)
+
+
+'''
+STRINGS
+'''
+
+
+bonk = (':regional_indicator_b: '
+        ':regional_indicator_o: '
+        ':regional_indicator_n: '
+        ':regional_indicator_k:')
 
 
 # run the bot

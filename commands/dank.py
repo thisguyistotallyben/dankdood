@@ -6,6 +6,7 @@ from utils import dankrank
 # dank message
 dankmess = ':100: :ok_hand: :joy:'
 
+
 @bot.command()
 async def dank(ctx):
     await ctx.send(dankmess)

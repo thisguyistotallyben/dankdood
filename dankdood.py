@@ -4,8 +4,12 @@
 
 import discord
 
+import bot
 from bot import config, bot
 from commands import lookup, dank, misc
+
+
+oofc = 0
 
 
 # startup stuff
@@ -16,6 +20,7 @@ async def on_ready():
     print('Logged in, fo shizzle')
 
 
+
 # every message goes through here
 @bot.event
 async def on_message(message):
@@ -24,6 +29,7 @@ async def on_message(message):
 
     # get the bonks, boonks, and the oofs
     if message.content == 'oof':
+        config['oofs'] += 1
         await message.channel.send('lol rip')
     elif message.content == 'bonk':
         await message.channel.send(bonk)
